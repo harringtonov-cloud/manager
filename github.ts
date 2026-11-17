@@ -1,0 +1,2 @@
+import {session} from './session';
+export async function gh(path:string,init:RequestInit={}){const s=await session();if(!s)throw new Error('Сначала подключи GitHub');const r=await fetch('https://api.github.com'+path,{...init,headers:{Accept:'application/vnd.github+json',Authorization:`Bearer ${s.token}`,'X-GitHub-Api-Version':'2022-11-28',...(init.headers||{})},cache:'no-store'});const d=await r.json();if(!r.ok)throw new Error(d.message||`GitHub ${r.status}`);return d}
